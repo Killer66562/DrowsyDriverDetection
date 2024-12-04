@@ -53,9 +53,7 @@ model = Sequential([
     Dropout(0.1), 
 
     Dense(256, activation='relu'), 
-    Dense(64, activation="relu"), 
     Dense(16, activation='relu'), 
-    Dense(4, activation="relu"), 
     Dense(1, activation="sigmoid")
 ])
 
