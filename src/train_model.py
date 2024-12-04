@@ -1,6 +1,6 @@
 from keras.api import Model, Sequential
 from keras.api.layers import Input, Dropout, Dense, Conv2D, MaxPool2D, Flatten, \
-    Resizing, Rescaling, RandomFlip, RandomRotation, RandomBrightness
+    Resizing, Rescaling, RandomFlip, RandomRotation, RandomBrightness, RandomZoom
 from keras.api.optimizers import Adam
 from keras.api.utils import image_dataset_from_directory
 from keras.api.applications import ResNet50V2
@@ -18,8 +18,10 @@ IMG_HEIGHT = 128
 IMG_WIDTH = 128
 
 BATCH_SIZE = 200
-EPOCHS = 2
+EPOCHS = 20
 LEARNING_RATE = 0.001
+
+DATASETS_PATH = "datasets"
 
 
 model = Sequential([
@@ -27,8 +29,10 @@ model = Sequential([
 
     Conv2D(4, (3, 3), activation="relu", padding="same"), 
     Conv2D(4, (3, 3), activation="relu", padding="same"), 
+    Conv2D(4, (3, 3), activation="relu", padding="same"), 
     MaxPool2D((2, 2), strides=(3, 3)), 
 
+    Conv2D(8, (3, 3), activation="relu", padding="same"), 
     Conv2D(8, (3, 3), activation="relu", padding="same"), 
     Conv2D(8, (3, 3), activation="relu", padding="same"), 
     MaxPool2D((2, 2), strides=(3, 3)), 
@@ -38,8 +42,10 @@ model = Sequential([
     MaxPool2D((2, 2), strides=(3, 3)), 
 
     Conv2D(32, (3, 3), activation="relu", padding="same"), 
+    Conv2D(32, (3, 3), activation="relu", padding="same"), 
     MaxPool2D((2, 2), strides=(3, 3)), 
 
+    Conv2D(64, (3, 3), activation="relu", padding="same"), 
     Conv2D(64, (3, 3), activation="relu", padding="same"), 
     MaxPool2D((2, 2), strides=(3, 3)), 
 
@@ -47,9 +53,9 @@ model = Sequential([
     Dropout(0.1), 
 
     Dense(256, activation='relu'), 
-    Dense(64, activation='relu'), 
+    Dense(64, activation="relu"), 
     Dense(16, activation='relu'), 
-    Dense(4, activation='relu'), 
+    Dense(4, activation="relu"), 
     Dense(1, activation="sigmoid")
 ])
 
@@ -59,9 +65,10 @@ normalization = Sequential([
 ])
 
 data_augmentation = Sequential([
+    RandomZoom(0.5), 
     RandomFlip("horizontal"), 
     RandomRotation(0.2), 
-    RandomBrightness(0.3)
+    RandomBrightness(0.2)
 ])
 
 optimizer = Adam(learning_rate=LEARNING_RATE)
@@ -69,7 +76,7 @@ optimizer = Adam(learning_rate=LEARNING_RATE)
 model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
 model.summary()
 
-datasets_path = os.path.abspath("datasets")
+datasets_path = os.path.abspath(DATASETS_PATH)
 dataset_train, dataset_validation = image_dataset_from_directory(
     datasets_path, 
     color_mode="rgb", 
