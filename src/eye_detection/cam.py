@@ -41,17 +41,18 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 
 options = FaceLandmarkerOptions(
   num_faces=10,
-  base_options=BaseOptions(model_asset_path='./model/face_landmarker.task'),
+  base_options=BaseOptions(model_asset_path='src/eye_detection/model/face_landmarker.task'),
   running_mode=VisionRunningMode.IMAGE)
 
 # create instance of FaceLandmarker  
 landmarker = FaceLandmarker.create_from_options(options)
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 while cap.isOpened():
   success, frame = cap.read() # read frame
   
+  '''
   #----------------------------------test MSR(Retinex光照補強)-------------------------------------
   scales = [3, 5, 9]
   b_gray, g_gray, r_gray = cv2.split(frame)
@@ -61,6 +62,7 @@ while cap.isOpened():
   result = cv2.merge([b_gray, g_gray, r_gray])
   cv2.imwrite("MSR_image.jpg", result)
   #-----------------------------------------------------------------------------------------------
+  '''
   if not success:
     print('Can not get Frame')
     break
