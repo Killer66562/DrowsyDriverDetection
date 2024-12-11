@@ -1,0 +1,31 @@
+{
+    "root_path": "datasets", 
+    "items": {
+        "face": {
+            "path": "face", 
+            "splitRequired": true, 
+            "validationSplit": 0.2, 
+            "labels": ["Drowsy", "Non drowsy"]
+        }, 
+        "faceProcessed": {
+            "path": "face_processed", 
+            "splitRequired": true, 
+            "validationSplit": 0.2, 
+            "labels": ["Drowsy", "Non drowsy"]
+        }, 
+        "faceNew": {
+            "path": "face_new", 
+            "splitRequired": false, 
+            "trainPath": "train", 
+            "testPath": "test", 
+            "labels": ["Drowsy", "Natural"]
+        }, 
+        "eyes": {
+            "path": "eyes", 
+            "splitRequired": false, 
+            "trainPath": "train", 
+            "testPath": "test", 
+            "labels": ["close eyes", "open eyes"]
+        }
+    }
+}

@@ -10,7 +10,7 @@ from keras.api.preprocessing.image import load_img, img_to_array
 from PIL import Image
 
 
-MODEL_PATH = "models/model-20241128-013927.keras"
+MODEL_PATH = "models/model-20241204-191210.keras"
 IMG_HEIGHT = 227
 IMG_WIDTH = 227
 COLOR_MODE = "rgb"
@@ -34,6 +34,10 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 options = FaceDetectorOptions(
     base_options=BaseOptions(model_asset_path='models/blaze_face_short_range.tflite'),
     running_mode=VisionRunningMode.IMAGE)
+
+drowsy_for = 0
+drowsy_max = 500
+drowsy_times = 0
 
 with FaceDetector.create_from_options(options) as detector:
     cap = cv2.VideoCapture(VIDEO_DEVICE_NUMBER)
