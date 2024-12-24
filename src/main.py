@@ -120,7 +120,7 @@ while cap.isOpened():
         data = normalization(data)
 
         result = model.predict(data)
-        print(result[0][0])
+        print(result)
     except:
         pass
 

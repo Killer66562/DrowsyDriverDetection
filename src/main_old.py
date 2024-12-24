@@ -10,7 +10,7 @@ from keras.api.preprocessing.image import load_img, img_to_array
 from PIL import Image
 
 
-MODEL_PATH = "models/model-20241204-191210.keras"
+MODEL_PATH = "prediction_models/model-20241204-191210.keras"
 IMG_HEIGHT = 227
 IMG_WIDTH = 227
 COLOR_MODE = "rgb"
